@@ -49,8 +49,20 @@ if __name__=="__main__":
     "F":{"id":"id","(":"(.E.)"}
     }
     terminals = ["id","(",")","+","*","S"]
-     print(predictive_parsing(sentence="(.).$", parsingtable = {"S": {"(": "(.S.).S", ")": "epsilon", "$": "epsilon"}}, terminals=["(", ")", "$"], start_state="S"))
+    # print(predictive_parsing(sentence="(.).$", parsingtable = {"S": {"(": "(.S.).S", ")": "epsilon", "$": "epsilon"}}, terminals=["(", ")", "$"], start_state="S"))
 
-    print(predictive_parsing(sentence="id.+.(.id.+.id.).$",parsingtable=parsingtable,terminals=terminals,start_state="E",verbose=True))
-    #Another Example done in class:-
-    print(predictive_parsing(sentence="c.c.c.c.d.d.$",parsingtable={"S" : {"c":"C.C","d":"C.C"},"C":{"c":"c.C","d":"d"}},terminals=["c,d"],start_state="S"))
+    # print(predictive_parsing(sentence="id.+.(.id.+.id.).$",parsingtable=parsingtable,terminals=terminals,start_state="E",verbose=True))
+    # #Another Example done in class:-
+    # print(predictive_parsing(sentence="c.c.c.c.d.d.$",parsingtable={"S" : {"c":"C.C","d":"C.C"},"C":{"c":"c.C","d":"d"}},terminals=["c,d"],start_state="S"))
+
+    insentence = input("Enter the sentence to be parsed : ")
+    interminals = input("Enter the terminals : ").split(",")
+    startstate = input("Enter the start state : ")
+    allchar = interminals.copy()+[startstate]
+    parsingtable = {}
+    for i in allchar:
+        parsingtable[i]={}
+        for j in allchar:
+            parsingtable[i][j]=input("Enter the production for "+i+" on "+j+" : ")
+
+    print(predictive_parsing(sentence=insentence,parsingtable=parsingtable,terminals=interminals,start_state=startstate,verbose=True))
