@@ -38,31 +38,41 @@ def predictive_parsing(sentence,parsingtable,terminals,start_state="S",verbose=T
         stack=new+stack[1:]
     return "Not Accepted"
 
-if __name__=="__main__":
-    #Example for the working of the predictive parsing :-
-    #input for the grammar : E->TE1;E1->+TE1|epsilon;T->FT1 ...
-    parsingtable = {
-    "E" : {"id" : "T.E1", "(" : "T.E1"},
-    "E1" : {"+":"+.T.E1", ")":"epsilon", "$" : "epsilon"},
-    "T" : {"id" : "F.T1", "(" : "F.T1" },
-    "T1" : {"+" : "epsilon", "*" : "*.F.T1", ")" : "epsilon", "$" : "epsilon"},
-    "F":{"id":"id","(":"(.E.)"}
-    }
-    terminals = ["id","(",")","+","*","S"]
-    # print(predictive_parsing(sentence="(.).$", parsingtable = {"S": {"(": "(.S.).S", ")": "epsilon", "$": "epsilon"}}, terminals=["(", ")", "$"], start_state="S"))
+if __name__ == "__main__":
+    # Interactive input section
+    parsing_table_input = input("Enter the parsing table in the format 'nonterminal: {terminal1: production1, terminal2: production2, ...}': ")
+    terminals_input = input("Enter the list of terminals separated by commas: ")
+    start_state_input = input("Enter the start state: ")
 
-    # print(predictive_parsing(sentence="id.+.(.id.+.id.).$",parsingtable=parsingtable,terminals=terminals,start_state="E",verbose=True))
-    # #Another Example done in class:-
-    # print(predictive_parsing(sentence="c.c.c.c.d.d.$",parsingtable={"S" : {"c":"C.C","d":"C.C"},"C":{"c":"c.C","d":"d"}},terminals=["c,d"],start_state="S"))
+    # Convert input strings to dictionaries and list
+    parsing_table = eval(parsing_table_input)
+    terminals = terminals_input.split(",")
 
-    insentence = input("Enter the sentence to be parsed : ")
-    interminals = input("Enter the terminals : ").split(",")
-    startstate = input("Enter the start state : ")
-    allchar = interminals.copy()+[startstate]
-    parsingtable = {}
-    for i in allchar:
-        parsingtable[i]={}
-        for j in allchar:
-            parsingtable[i][j]=input("Enter the production for "+i+" on "+j+" : ")
+    insentence = input("Enter the sentence to be parsed: ")
 
-    print(predictive_parsing(sentence=insentence,parsingtable=parsingtable,terminals=interminals,start_state=startstate,verbose=True))
+    print(predictive_parsing(sentence=insentence, parsingtable=parsing_table, terminals=terminals, start_state=start_state_input, verbose=True))
+
+# if __name__=="__main__":
+#     #Example for the working of the predictive parsing :-
+#     #input for the grammar : E->TE1;E1->+TE1|epsilon;T->FT1 ...
+#     # parsingtable = {
+#     # "E" : {"id" : "T.E1", "(" : "T.E1"},
+#     # "E1" : {"+":"+.T.E1", ")":"epsilon", "$" : "epsilon"},
+#     # "T" : {"id" : "F.T1", "(" : "F.T1" },
+#     # "T1" : {"+" : "epsilon", "*" : "*.F.T1", ")" : "epsilon", "$" : "epsilon"},
+#     # "F":{"id":"id","(":"(.E.)"}
+#     # }
+#     # terminals = ["id","(",")","+","*","S"]
+#     # print(predictive_parsing(sentence="(.).$", parsingtable = {"S": {"(": "(.S.).S", ")": "epsilon", "$": "epsilon"}}, terminals=["(", ")", "$"], start_state="S"))
+
+#     # print(predictive_parsing(sentence="id.+.(.id.+.id.).$",parsingtable=parsingtable,terminals=terminals,start_state="E",verbose=True))
+#     # #Another Example done in class:-
+#     # print(predictive_parsing(sentence="c.c.c.c.d.d.$",parsingtable={"S" : {"c":"C.C","d":"C.C"},"C":{"c":"c.C","d":"d"}},terminals=["c,d"],start_state="S"))
+
+#     insentence = input("Enter the sentence to be parsed : ")
+#     interminals = input("Enter the terminals : ").split(",")
+#     startstate = input("Enter the start state : ")
+
+#     print(predictive_parsing(sentence=insentence,parsingtable=parsingtable,terminals=interminals,start_state=startstate,verbose=True))
+
+
